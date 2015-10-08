@@ -17,7 +17,6 @@ class AdjacencyMatrix
   end
 
   def find_edges(node)
-    edges = []
     @matrix.find_all do |edge|
       start, stop = edge
       start == node || stop == node
