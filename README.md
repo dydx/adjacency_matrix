@@ -1,4 +1,4 @@
-# Adjancy Matrices
+# Adjacency Matrices
 
 An adjacency matrix is a data structure that represents a graph
 
