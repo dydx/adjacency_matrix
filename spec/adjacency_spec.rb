@@ -71,17 +71,18 @@ describe AdjacencyMatrix do
     expect(@matrix.connected?(1,4,2)).to be true
   end
 
-  it "can tell if there is a path between two nodes" do
+  it "can tell if there is a simple path between two nodes" do
+    edge1 = [1,2]
+    @matrix.add_edge(edge1)
+    expect(@matrix.path?(1,2)).to eql([[1,2]])
+    expect(@matrix.path?(2,1)).to eql([[2,1]])
+  end
+
+  it "can tell if there is a more complex path between two nodes" do
     edge1 = [1,2]
     edge2 = [2,3]
-    edge3 = [3,4]
-    edge4 = [1,3]
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
-    @matrix.add_edge(edge3)
-    @matrix.add_edge(edge4)
-    expect(@matrix.path?(1,2)).to eql([[1,2]])
-    expect(@matrix.path?(1,3)).to eql([[1,3]])
-    expect(@matrix.path?(1,4)).to eql([[1,3], [3,4]])
+    expect(@matrix.path?(1,3)).to eql([[1,2],[2,3]])
   end
 end

@@ -12,6 +12,7 @@ class AdjacencyMatrix
       nil
     else
       @matrix << edge
+      @matrix.sort!
     end
   end
 
@@ -41,28 +42,11 @@ class AdjacencyMatrix
     connected
   end
 
-  # This currently only tells me if there is an edge between
-  # n1 and n2 if the matrix contains [n1, n2]. This is basically
-  # already solved with `connected?`.
-  #
-  # What I'd like is to be able to give it an n1 and an n2 that
-  # are connected less directly, say, to find a path from 1 to 4
-  # given:
-  #   [(1,2), (2,3), (3,4), (1,3)]
-  #
-  # Was thinking about using the head and tail of the matrix and
-  # then recursing over it, but there's a lot of edge cases that
-  # misses
-  def path?(node1, node2, path=[])
-    @matrix.each do |edge|
-      start, stop = edge
-      if node1 == start && node2 == stop
-        path << edge
-      elsif node2 == start && node1 == stop
-        path << edge
-      end
+  def path?(node1, node2)
+    if self.connected?(node1, node2)
+      [[node1, node2]]
+    else
     end
-    path
   end
 
 end
