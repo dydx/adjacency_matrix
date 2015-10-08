@@ -39,9 +39,19 @@ describe AdjacencyMatrix do
     edge2 = [1,3]
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
-    expect(@matrix.find_edges(1)).to eql([2,3])
-    expect(@matrix.find_edges(2)).to eql([1])
-    expect(@matrix.find_edges(3)).to eql([1])
+    expect(@matrix.find_edges(1)).to eql([[1,2],[1,3]])
+    expect(@matrix.find_edges(2)).to eql([[1,2]])
+    expect(@matrix.find_edges(3)).to eql([[1,3]])
+  end
+
+  it "can find neighbors of a given node" do
+    edge1 = [1,2]
+    edge2 = [1,3]
+    edge3 = [1,4]
+    @matrix.add_edge(edge1)
+    @matrix.add_edge(edge2)
+    @matrix.add_edge(edge3)
+    expect(@matrix.neighbors(1)).to eql([2,3,4])
   end
 
   it "can say if two nodes are connected" do
@@ -71,20 +81,35 @@ describe AdjacencyMatrix do
     expect(@matrix.connected?(1,4,2)).to be true
   end
 
-  it "can tell if there is a simple path between two nodes" do
+  it "can tell if there is a 1st order path between two nodes" do
     edge1 = [1,2]
     @matrix.add_edge(edge1)
     expect(@matrix.path?(1,2)).to eql([[1,2]])
     expect(@matrix.path?(2,1)).to eql([[1,2]])
   end
 
-  it "can tell if there is a more complex path between two nodes" do
+  it "can tell if there is a 2nd order path between two nodes" do
     edge1 = [1,2]
     edge2 = [2,3]
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
     expect(@matrix.path?(1,3)).to eql([[1,2],[2,3]])
     expect(@matrix.path?(3,1)).to eql([[1,2],[2,3]])
+  end
+
+  it "can tell if there is a 3rd order path between two nodes" do
+    edge1 = [1,2]
+    edge2 = [2,3]
+    edge3 = [3,4]
+    # edge4 = [2,4]
+    edge5 = [4,5]
+    @matrix.add_edge(edge1)
+    @matrix.add_edge(edge2)
+    @matrix.add_edge(edge3)
+    # @matrix.add_edge(edge4)
+    @matrix.add_edge(edge5)
+    expect(@matrix.path?(1,4)).to eql([[1,2],[2,3],[3,4]])
+    expect(@matrix.path?(4,1)).to eql([[1,2],[2,3],[3,4]])
   end
 
 end
