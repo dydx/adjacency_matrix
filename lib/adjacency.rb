@@ -46,6 +46,9 @@ class AdjacencyMatrix
     if self.connected?(node1, node2)
       [[node1, node2]]
     else
+      @matrix.find_all do |edge|
+        edge.first == node1 || edge.last == node2
+      end
     end
   end
 
