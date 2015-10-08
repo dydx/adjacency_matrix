@@ -45,17 +45,24 @@ class AdjacencyMatrix
   def path?(node1, node2)
     # maaad haxxx
     node1, node2 = [node1, node2].sort
-    # check 1st paths
-    if self.connected?(node1, node2)
+    if first_order_path?(node1, node2)
       [[node1, node2]]
-    else
-      # find 2nd order paths
-      node1_edges = self.find_edges(node1)
-      node2_edges = self.find_edges(node2)
-      if node1_edges == node2_edges
-        [[node1, node1_edges.first], [node2_edges.first, node2]]
-      end
+    elsif second_order_path?(node1, node2)
+      common = self.find_edges(node1).first
+      [[node1, common], [common, node2]]
     end
+  end
+
+  private
+
+  def first_order_path?(node1, node2)
+    self.connected?(node1, node2)
+  end
+
+  def second_order_path?(node1, node2)
+    node1_edges = self.find_edges(node1)
+    node2_edges = self.find_edges(node2)
+    node1_edges == node2_edges
   end
 
 end
