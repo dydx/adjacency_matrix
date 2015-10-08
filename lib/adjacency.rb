@@ -31,7 +31,7 @@ class AdjacencyMatrix
       elsif stop == node
         start
       end
-    end
+    end.compact
   end
 
   def connected?(*nodes)
@@ -48,33 +48,12 @@ class AdjacencyMatrix
   end
 
   def path?(node1, node2)
-    # maaad haxxx
+    # the stuff of nightmares...
     node1, node2 = [node1, node2].sort
-    if first_order_path?(node1, node2)
-      [[node1, node2]]
-    elsif second_order_path?(node1, node2)
-      common = self.find_edges(node1).first.last
-      [[node1, common], [common, node2]]
-    else
-      node1_edges = self.find_edges(node1)
-      node2_edges = self.find_edges(node2)
-      puts
-      puts "Node #{node1}'s Edges: #{node1_edges}"
-      puts "Node #{node2}'s Edges: #{node2_edges}"
-      puts "Checking edges of associated nodes"
-      node1_edges.each do |edge|
-        start, stop = edge
-        puts "Checking Node #{node1} --------"
-        puts "Node #{start}'s Edges: #{self.find_edges(start)}"
-        puts "Node #{stop}'s Edges: #{self.find_edges(stop)}"
-      end
-
-      node2_edges.each do |edge|
-        start, stop = edge
-        puts "Checking Node #{node2} --------"
-        puts "Node #{start}'s Edges: #{self.find_edges(start)}"
-        puts "Node #{stop}'s Edges: #{self.find_edges(stop)}"
-      end
+    (self.neighbors(node1) + self.neighbors(node2)).uniq.collect do |node|
+      self.find_edges(node).flatten
+    end.flatten.each_slice(2).to_a.uniq.find_all do |edge|
+      edge.first != node2
     end
   end
 

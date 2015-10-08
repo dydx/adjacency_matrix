@@ -39,18 +39,20 @@ describe AdjacencyMatrix do
     edge2 = [1,3]
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
-    expect(@matrix.find_edges(1)).to eql([[1,2],[1,3]])
-    expect(@matrix.find_edges(2)).to eql([[1,2]])
-    expect(@matrix.find_edges(3)).to eql([[1,3]])
+    expect(@matrix.find_edges(1)).to eql([edge1,edge2])
+    expect(@matrix.find_edges(2)).to eql([edge1])
+    expect(@matrix.find_edges(3)).to eql([edge2])
   end
 
   it "can find neighbors of a given node" do
     edge1 = [1,2]
     edge2 = [1,3]
     edge3 = [1,4]
+    edge4 = [2,4]
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
     @matrix.add_edge(edge3)
+    @matrix.add_edge(edge4)
     expect(@matrix.neighbors(1)).to eql([2,3,4])
   end
 
