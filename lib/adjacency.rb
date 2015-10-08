@@ -43,11 +43,17 @@ class AdjacencyMatrix
   end
 
   def path?(node1, node2)
+    # maaad haxxx
+    node1, node2 = [node1, node2].sort
+    # check 1st paths
     if self.connected?(node1, node2)
       [[node1, node2]]
     else
-      @matrix.find_all do |edge|
-        edge.first == node1 || edge.last == node2
+      # find 2nd order paths
+      node1_edges = self.find_edges(node1)
+      node2_edges = self.find_edges(node2)
+      if node1_edges == node2_edges
+        [[node1, node1_edges.first], [node2_edges.first, node2]]
       end
     end
   end

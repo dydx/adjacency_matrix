@@ -75,7 +75,7 @@ describe AdjacencyMatrix do
     edge1 = [1,2]
     @matrix.add_edge(edge1)
     expect(@matrix.path?(1,2)).to eql([[1,2]])
-    expect(@matrix.path?(2,1)).to eql([[2,1]])
+    expect(@matrix.path?(2,1)).to eql([[1,2]])
   end
 
   it "can tell if there is a more complex path between two nodes" do
@@ -84,5 +84,7 @@ describe AdjacencyMatrix do
     @matrix.add_edge(edge1)
     @matrix.add_edge(edge2)
     expect(@matrix.path?(1,3)).to eql([[1,2],[2,3]])
+    expect(@matrix.path?(3,1)).to eql([[1,2],[2,3]])
   end
+
 end
